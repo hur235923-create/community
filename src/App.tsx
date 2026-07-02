@@ -1,32 +1,38 @@
-import { useEffect, useState } from "react"
-import { supabase } from "@/lib/supabase"
+import { Routes, Route } from "react-router-dom"
+import Layout from "@/components/Layout"
+import ProtectedRoute from "@/components/ProtectedRoute"
+import PostList from "@/pages/PostList"
+import PostDetail from "@/pages/PostDetail"
+import Write from "@/pages/Write"
+import Edit from "@/pages/Edit"
+import Login from "@/pages/Login"
+import Signup from "@/pages/Signup"
 
-function App() {
-  const [cats, setCats] = useState<{ id: number; name: string }[]>([])
-  const [err, setErr] = useState<string | null>(null)
-
-  useEffect(() => {
-    supabase
-      .from("categories")
-      .select("id, name")
-      .order("id")
-      .then(({ data, error }) => {
-        if (error) setErr(error.message)
-        else setCats(data ?? [])
-      })
-  }, [])
-
+export default function App() {
   return (
-    <div className="p-8">
-      <h1 className="text-xl font-bold">Supabase 연결 테스트</h1>
-      {err && <p className="text-red-500">에러: {err}</p>}
-      <ul className="mt-2 list-disc pl-6" data-testid="cats">
-        {cats.map((c) => (
-          <li key={c.id}>{c.id}: {c.name}</li>
-        ))}
-      </ul>
-    </div>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<PostList />} />
+        <Route path="/posts/:id" element={<PostDetail />} />
+        <Route
+          path="/posts/:id/edit"
+          element={
+            <ProtectedRoute>
+              <Edit />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/write"
+          element={
+            <ProtectedRoute>
+              <Write />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+      </Route>
+    </Routes>
   )
 }
-
-export default App
