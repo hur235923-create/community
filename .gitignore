@@ -25,4 +25,4 @@ dist-ssr
 
 # temp verification artifacts
 _verify_*.png
-verify.mjs
+verify*.mjs
