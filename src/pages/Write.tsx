@@ -46,13 +46,16 @@ export default function Write() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
-      <h1 className="text-xl font-bold">글쓰기</h1>
-      <div className="space-y-1">
+    <form
+      onSubmit={onSubmit}
+      className="space-y-5 rounded-2xl border bg-card p-6 shadow-[0_1px_2px_rgba(28,27,41,0.04)]"
+    >
+      <h1 className="text-xl font-extrabold tracking-tight">새 글 쓰기</h1>
+      <div className="space-y-1.5">
         <Label htmlFor="category">카테고리</Label>
         <select
           id="category"
-          className="w-full rounded-md border bg-background p-2 text-sm"
+          className="h-10 w-full rounded-lg border border-input bg-background px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
           value={categoryId ?? ""}
           onChange={(e) => setCategoryId(Number(e.target.value))}
         >
@@ -63,11 +66,11 @@ export default function Write() {
           ))}
         </select>
       </div>
-      <div className="space-y-1">
+      <div className="space-y-1.5">
         <Label htmlFor="title">제목</Label>
-        <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+        <Input id="title" className="h-10" value={title} onChange={(e) => setTitle(e.target.value)} />
       </div>
-      <div className="space-y-1">
+      <div className="space-y-1.5">
         <Label htmlFor="content">내용</Label>
         <Textarea
           id="content"
