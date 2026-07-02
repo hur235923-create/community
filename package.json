@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "postbuild": "shx cp dist/index.html dist/404.html",
     "lint": "oxlint",
     "test": "vitest run",
     "preview": "vite preview"
@@ -38,6 +39,7 @@
     "jsdom": "^29.1.1",
     "oxlint": "^1.71.0",
     "playwright": "^1.61.1",
+    "shx": "^0.4.0",
     "typescript": "~6.0.2",
     "vite": "^8.1.1",
     "vitest": "^4.1.9"
