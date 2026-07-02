@@ -1,12 +1,30 @@
-import { Button } from "@/components/ui/button"
+import { useEffect, useState } from "react"
+import { supabase } from "@/lib/supabase"
 
 function App() {
+  const [cats, setCats] = useState<{ id: number; name: string }[]>([])
+  const [err, setErr] = useState<string | null>(null)
+
+  useEffect(() => {
+    supabase
+      .from("categories")
+      .select("id, name")
+      .order("id")
+      .then(({ data, error }) => {
+        if (error) setErr(error.message)
+        else setCats(data ?? [])
+      })
+  }, [])
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-4">
-      <h1 className="text-2xl font-bold">shadcn 렌더 테스트</h1>
-      <Button>기본 버튼</Button>
-      <Button variant="secondary">보조 버튼</Button>
-      <Button variant="destructive">삭제 버튼</Button>
+    <div className="p-8">
+      <h1 className="text-xl font-bold">Supabase 연결 테스트</h1>
+      {err && <p className="text-red-500">에러: {err}</p>}
+      <ul className="mt-2 list-disc pl-6" data-testid="cats">
+        {cats.map((c) => (
+          <li key={c.id}>{c.id}: {c.name}</li>
+        ))}
+      </ul>
     </div>
   )
 }
